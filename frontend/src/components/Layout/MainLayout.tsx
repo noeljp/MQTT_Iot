@@ -24,6 +24,9 @@ import {
   Warning as WarningIcon,
   Logout as LogoutIcon,
   Settings as SettingsIcon,
+  Business as BusinessIcon,
+  Memory as MemoryIcon,
+  Timeline as TimelineIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -49,8 +52,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard' },
-    { text: 'Devices', icon: <DevicesIcon />, path: '/devices' },
+    { text: 'Sites', icon: <BusinessIcon />, path: '/sites' },
     { text: 'Gateways', icon: <RouterIcon />, path: '/gateways' },
+    { text: 'Nodes', icon: <MemoryIcon />, path: '/nodes' },
+    { text: 'Sensor Data', icon: <TimelineIcon />, path: '/sensor-data' },
+    { text: 'Devices', icon: <DevicesIcon />, path: '/devices' },
     { text: 'Alerts', icon: <WarningIcon />, path: '/alerts' },
     { text: 'MQTT Config', icon: <SettingsIcon />, path: '/mqtt-config' },
   ];

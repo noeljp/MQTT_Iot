@@ -70,4 +70,56 @@ export const healthAPI = {
   check: () => api.get('/health'),
 };
 
+// Sites
+export const sitesAPI = {
+  getAll: () => api.get('/sites'),
+  getById: (id: number) => api.get(`/sites/${id}`),
+  create: (data: any) => api.post('/sites', data),
+  update: (id: number, data: any) => api.put(`/sites/${id}`, data),
+  delete: (id: number) => api.delete(`/sites/${id}`),
+  getGateways: (id: number) => api.get(`/sites/${id}/gateways`),
+};
+
+// IoT Gateways
+export const iotGatewaysAPI = {
+  getAll: (params?: { site_id?: number; status?: string }) =>
+    api.get('/iot/gateways', { params }),
+  getById: (id: number) => api.get(`/iot/gateways/${id}`),
+  create: (data: any) => api.post('/iot/gateways', data),
+  update: (id: number, data: any) => api.put(`/iot/gateways/${id}`, data),
+  delete: (id: number) => api.delete(`/iot/gateways/${id}`),
+  getStats: (id: number) => api.get(`/iot/gateways/${id}/stats`),
+  sendCommand: (id: number, command: string, params?: any) =>
+    api.post(`/iot/gateways/${id}/command`, { command, params }),
+};
+
+// Nodes
+export const nodesAPI = {
+  getAll: (params?: { gateway_id?: number; site_id?: number; status?: string }) =>
+    api.get('/iot/nodes', { params }),
+  getById: (id: number) => api.get(`/iot/nodes/${id}`),
+  create: (data: any) => api.post('/iot/nodes', data),
+  update: (id: number, data: any) => api.put(`/iot/nodes/${id}`, data),
+  delete: (id: number) => api.delete(`/iot/nodes/${id}`),
+  reassignGateway: (id: number, gateway_id: number) =>
+    api.put(`/iot/nodes/${id}/gateway`, { gateway_id }),
+  updateADCConfig: (id: number, config: any) =>
+    api.put(`/iot/nodes/${id}/adc-config`, config),
+  updateBluetoothConfig: (id: number, config: any) =>
+    api.put(`/iot/nodes/${id}/bluetooth-config`, config),
+  getSensorData: (id: number, params?: any) =>
+    api.get(`/iot/nodes/${id}/sensor-data`, { params }),
+  getQRCodes: (id: number, params?: any) =>
+    api.get(`/iot/nodes/${id}/qr-codes`, { params }),
+};
+
+// Sensor Data
+export const sensorDataAPI = {
+  getLatest: (params?: any) => api.get('/sensor-data/latest', { params }),
+  getHistory: (params?: any) => api.get('/sensor-data/history', { params }),
+  exportCSV: (params?: any) =>
+    api.get('/sensor-data/export', { params, responseType: 'blob' }),
+  cleanup: () => api.post('/sensor-data/cleanup'),
+};
+
 export default api;

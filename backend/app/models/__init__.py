@@ -4,6 +4,10 @@ Database models for APRU40 IoT Management Platform
 from datetime import datetime
 from app import db
 
+# Import new IoT models
+from app.models.iot import Site, Gateway, Node, SensorData
+
+# Legacy models (keep for backward compatibility)
 class Device(db.Model):
     """IoT Device/Node Model"""
     __tablename__ = 'devices'

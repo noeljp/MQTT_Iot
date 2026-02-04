@@ -10,6 +10,9 @@ import Devices from './components/Devices/Devices';
 import Gateways from './components/Gateways/Gateways';
 import Alerts from './components/Alerts/Alerts';
 import MQTTConfig from './components/MQTTConfig/MQTTConfig';
+import Sites from './components/Sites/Sites';
+import Nodes from './components/Nodes/Nodes';
+import SensorData from './components/SensorData/SensorData';
 import Login from './components/Login';
 import websocketService from './services/websocket';
 
@@ -93,6 +96,36 @@ function App() {
               <PrivateRoute>
                 <MainLayout>
                   <MQTTConfig />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/sites"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <Sites />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/nodes"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <Nodes />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/sensor-data"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <SensorData />
                 </MainLayout>
               </PrivateRoute>
             }
