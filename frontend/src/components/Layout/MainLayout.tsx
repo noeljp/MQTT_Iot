@@ -23,6 +23,7 @@ import {
   Router as RouterIcon,
   Warning as WarningIcon,
   Logout as LogoutIcon,
+  Settings as SettingsIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -51,6 +52,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     { text: 'Devices', icon: <DevicesIcon />, path: '/devices' },
     { text: 'Gateways', icon: <RouterIcon />, path: '/gateways' },
     { text: 'Alerts', icon: <WarningIcon />, path: '/alerts' },
+    { text: 'MQTT Config', icon: <SettingsIcon />, path: '/mqtt-config' },
   ];
 
   const drawer = (

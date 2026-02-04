@@ -31,12 +31,13 @@ def create_app():
     socketio.init_app(app)
     
     # Register blueprints
-    from app.api import auth, devices, gateways, alerts, stats
+    from app.api import auth, devices, gateways, alerts, stats, mqtt_admin
     app.register_blueprint(auth.bp, url_prefix='/api/v1/auth')
     app.register_blueprint(devices.bp, url_prefix='/api/v1/devices')
     app.register_blueprint(gateways.bp, url_prefix='/api/v1/gateways')
     app.register_blueprint(alerts.bp, url_prefix='/api/v1/alerts')
     app.register_blueprint(stats.bp, url_prefix='/api/v1/stats')
+    app.register_blueprint(mqtt_admin.bp, url_prefix='/api/v1/mqtt')
     
     # Health check endpoint
     @app.route('/api/v1/health')
@@ -45,6 +46,11 @@ def create_app():
     
     # Register WebSocket event handlers
     from app.services import websocket
+    
+    # Initialize and connect MQTT service
+    from app.services.mqtt_service import mqtt_service
+    mqtt_service.app = app
+    mqtt_service.connect()
     
     # Create database tables
     with app.app_context():

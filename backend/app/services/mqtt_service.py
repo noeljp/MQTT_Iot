@@ -2,6 +2,7 @@
 MQTT client service for connecting to the MQTT broker
 """
 import paho.mqtt.client as mqtt
+from paho.mqtt.client import CallbackAPIVersion
 import os
 import json
 from datetime import datetime
@@ -15,16 +16,17 @@ class MQTTService:
         self.username = os.getenv('MQTT_USERNAME', '')
         self.password = os.getenv('MQTT_PASSWORD', '')
         
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc, properties=None):
         """Callback when connected to MQTT broker"""
         if rc == 0:
-            print(f"Connected to MQTT Broker at {self.broker}:{self.port}")
+            print(f"✓ Connected to MQTT Broker at {self.broker}:{self.port}")
             # Subscribe to APRU40 topics
             client.subscribe('apru40/+/data')
             client.subscribe('apru40/+/alert/#')
             client.subscribe('apru40/+/status')
+            print(f"✓ Subscribed to APRU40 topics")
         else:
-            print(f"Failed to connect to MQTT broker, return code {rc}")
+            print(f"✗ Failed to connect to MQTT broker, return code {rc}")
     
     def on_message(self, client, userdata, msg):
         """Callback when message received"""
@@ -63,18 +65,20 @@ class MQTTService:
     def connect(self):
         """Connect to MQTT broker"""
         try:
-            self.client = mqtt.Client()
+            # Use CallbackAPIVersion.VERSION2 for paho-mqtt 2.x
+            self.client = mqtt.Client(callback_api_version=CallbackAPIVersion.VERSION2)
             self.client.on_connect = self.on_connect
             self.client.on_message = self.on_message
             
             if self.username and self.password:
                 self.client.username_pw_set(self.username, self.password)
             
+            print(f"Connecting to MQTT broker at {self.broker}:{self.port}...")
             self.client.connect(self.broker, self.port, 60)
             self.client.loop_start()
             
         except Exception as e:
-            print(f"Error connecting to MQTT broker: {e}")
+            print(f"✗ Error connecting to MQTT broker: {e}")
     
     def disconnect(self):
         """Disconnect from MQTT broker"""

@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Devices from './components/Devices/Devices';
 import Gateways from './components/Gateways/Gateways';
 import Alerts from './components/Alerts/Alerts';
+import MQTTConfig from './components/MQTTConfig/MQTTConfig';
 import Login from './components/Login';
 import websocketService from './services/websocket';
 
@@ -82,6 +83,16 @@ function App() {
               <PrivateRoute>
                 <MainLayout>
                   <Alerts />
+                </MainLayout>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/mqtt-config"
+            element={
+              <PrivateRoute>
+                <MainLayout>
+                  <MQTTConfig />
                 </MainLayout>
               </PrivateRoute>
             }
