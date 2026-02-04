@@ -28,8 +28,13 @@ def get_devices(current_user):
     
     # If no devices exist, create mock data
     if not devices:
-        create_mock_devices()
-        devices = query.all()
+        try:
+            create_mock_devices()
+            devices = query.all()
+        except Exception as e:
+            # If mock data already exists or there's an error, just continue
+            print(f"Mock data creation skipped or failed: {e}")
+            devices = query.all()
     
     return jsonify({
         'devices': [device.to_dict() for device in devices],

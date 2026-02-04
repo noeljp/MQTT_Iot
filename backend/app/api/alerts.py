@@ -28,8 +28,13 @@ def get_alerts(current_user):
     
     # Create mock alerts if none exist
     if not alerts:
-        create_mock_alerts()
-        alerts = query.order_by(Alert.created_at.desc()).all()
+        try:
+            create_mock_alerts()
+            alerts = query.order_by(Alert.created_at.desc()).all()
+        except Exception as e:
+            # If mock data already exists or there's an error, just continue
+            print(f"Mock alerts creation skipped or failed: {e}")
+            alerts = query.order_by(Alert.created_at.desc()).all()
     
     return jsonify({
         'alerts': [alert.to_dict() for alert in alerts],

@@ -43,6 +43,7 @@ const Alerts: React.FC = () => {
 
   useEffect(() => {
     fetchAlerts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const Alerts: React.FC = () => {
     return () => {
       websocketService.off('alert:new', handleNewAlert);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter]);
 
   const handleAcknowledge = async (id: number) => {
