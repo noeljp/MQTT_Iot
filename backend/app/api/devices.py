@@ -163,12 +163,18 @@ def create_mock_devices():
             if node.status == 'online':
                 for sensor_type, unit in [('temperature', '°C'), ('humidity', '%'), ('pressure', 'hPa')]:
                     for j in range(5):
+                        # Generate appropriate values based on sensor type
+                        if sensor_type == 'temperature':
+                            value = random.uniform(15, 30)
+                        elif sensor_type == 'humidity':
+                            value = random.uniform(30, 80)
+                        else:  # pressure
+                            value = random.uniform(990, 1020)
+                        
                         sensor = Sensor(
                             device_id=node.id,
                             sensor_type=sensor_type,
-                            value=random.uniform(15, 30) if sensor_type == 'temperature' else 
-                                  random.uniform(30, 80) if sensor_type == 'humidity' else
-                                  random.uniform(990, 1020),
+                            value=value,
                             unit=unit,
                             timestamp=datetime.utcnow() - timedelta(minutes=j * 5)
                         )
