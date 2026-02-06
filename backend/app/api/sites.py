@@ -8,21 +8,21 @@ from app.api.auth import token_required
 
 bp = Blueprint('sites', __name__)
 
-@bp.route('/', methods=['GET'])
+@bp.route('', methods=['GET'])
 @token_required
 def get_sites(current_user):
     """Get all sites"""
     sites = Site.query.all()
     return jsonify({'sites': [site.to_dict() for site in sites]}), 200
 
-@bp.route('/<site_id>', methods=['GET'])
+@bp.route('/<int:site_id>', methods=['GET'])
 @token_required
 def get_site(current_user, site_id):
     """Get site details"""
     site = Site.query.get_or_404(site_id)
     return jsonify(site.to_dict()), 200
 
-@bp.route('/', methods=['POST'])
+@bp.route('', methods=['POST'])
 @token_required
 def create_site(current_user):
     """Create a new site"""
@@ -42,7 +42,7 @@ def create_site(current_user):
     
     return jsonify({'message': 'Site created successfully', 'site': site.to_dict()}), 201
 
-@bp.route('/<site_id>', methods=['PUT'])
+@bp.route('/<int:site_id>', methods=['PUT'])
 @token_required
 def update_site(current_user, site_id):
     """Update site"""
@@ -60,7 +60,7 @@ def update_site(current_user, site_id):
     
     return jsonify({'message': 'Site updated successfully', 'site': site.to_dict()}), 200
 
-@bp.route('/<site_id>', methods=['DELETE'])
+@bp.route('/<int:site_id>', methods=['DELETE'])
 @token_required
 def delete_site(current_user, site_id):
     """Delete site (and all associated gateways/nodes)"""
@@ -71,7 +71,7 @@ def delete_site(current_user, site_id):
     
     return jsonify({'message': 'Site deleted successfully'}), 200
 
-@bp.route('/<site_id>/gateways', methods=['GET'])
+@bp.route('/<int:site_id>/gateways', methods=['GET'])
 @token_required
 def get_site_gateways(current_user, site_id):
     """Get all gateways for a site"""

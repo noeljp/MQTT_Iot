@@ -28,7 +28,10 @@ def create_app():
     # Initialize extensions with app
     db.init_app(app)
     CORS(app, origins=os.getenv('CORS_ORIGINS', 'http://localhost:3000').split(','))
-    socketio.init_app(app)
+    socketio.init_app(app, async_mode='threading', cors_allowed_origins='*')
+    
+    # Disable strict slashes to avoid 308 redirects
+    app.url_map.strict_slashes = False
     
     # Register blueprints
     from app.api import auth, devices, gateways, alerts, stats, mqtt_admin
